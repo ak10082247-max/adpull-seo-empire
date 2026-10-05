@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Facebook & TikTok Ad Extractor Tool | AdPull</title>
+    <meta name="description" content="Paste any Facebook Ad Library or TikTok Ad link to extract the raw video and copy.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased min-h-screen flex flex-col">
+
+    <nav class="bg-blue-600 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold">AdPull Web Tools</a>
+            <a href="https://chromewebstore.google.com/detail/kmgpgdmbflignbkjmdkckdepncdhbgcl" class="bg-white text-blue-600 px-4 py-2 rounded font-bold hover:bg-gray-100 transition">Get Chrome Extension</a>
+        </div>
+    </nav>
+
+    <main class="flex-grow container mx-auto mt-16 px-4 max-w-3xl text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Free Ad Media Extractor</h1>
+        <p class="text-lg text-gray-600 mb-10">Paste a link from the Facebook Ad Library or TikTok Creative Center below to bypass encryption and download the raw HD video.</p>
+
+        <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+            <input type="text" id="urlInput" placeholder="https://www.facebook.com/ads/library/?id=..." class="w-full p-4 border border-gray-300 rounded-lg mb-4 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="extractBtn" class="w-full bg-blue-600 text-white font-bold text-xl py-4 rounded-lg hover:bg-blue-700 transition">
+                Extract HD Video
+            </button>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="hidden flex-col items-center mt-6">
+                <div class="loader mb-4"></div>
+                <p class="text-gray-500 font-semibold" id="loadingText">Bypassing Meta Blob Encryption...</p>
+            </div>
+
+            <!-- Error / Conversion Modal -->
+            <div id="conversionState" class="hidden mt-6 p-6 bg-red-50 border border-red-200 rounded-lg text-left">
+                <h3 class="text-red-700 font-bold text-xl mb-2">⚠️ Browser Security Restriction</h3>
+                <p class="text-red-600 mb-4">
+                    Modern ad platforms block cloud-based web apps from downloading their media streams. 
+                    To bypass this encryption, the extraction must happen <b>locally</b> inside your browser.
+                </p>
+                <p class="text-gray-700 mb-6 font-semibold">
+                    Install the official AdPull Chrome Extension to unlock 1-click downloads directly on the ad pages.
+                </p>
+                <a href="https://chromewebstore.google.com/detail/kmgpgdmbflignbkjmdkckdepncdhbgcl" target="_blank" class="block text-center w-full bg-red-600 text-white font-bold py-3 rounded-lg hover:bg-red-700 transition shadow-md">
+                    Install AdPull Extension (Free)
+                </a>
+            </div>
+        </div>
+        
+        <div class="mt-12 text-left">
+            <h3 class="text-xl font-bold mb-4 text-gray-500 uppercase tracking-wide">Supported Platforms</h3>
+            <div class="flex gap-4 opacity-50 flex-wrap">
+                <span class="bg-gray-200 px-4 py-2 rounded-full font-semibold">Facebook Ads</span>
+                <span class="bg-gray-200 px-4 py-2 rounded-full font-semibold">TikTok Ads</span>
+                <span class="bg-gray-200 px-4 py-2 rounded-full font-semibold">LinkedIn Ads</span>
+                <span class="bg-gray-200 px-4 py-2 rounded-full font-semibold">Google Ads</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('extractBtn').addEventListener('click', () => {
+            const url = document.getElementById('urlInput').value;
+            if (!url) return alert('Please paste a valid Ad URL first.');
+            
+            document.getElementById('extractBtn').classList.add('hidden');
+            document.getElementById('loadingState').classList.remove('hidden');
+            document.getElementById('loadingState').classList.add('flex');
+            
+            const texts = ["Bypassing Blob Encryption...", "Locating raw media stream...", "Analyzing cross-origin policies...", "Extraction Blocked!"];
+            let i = 0;
+            
+            const interval = setInterval(() => {
+                i++;
+                if (i < texts.length) {
+                    document.getElementById('loadingText').innerText = texts[i];
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('loadingState').classList.add('hidden');
+                    document.getElementById('loadingState').classList.remove('flex');
+                    document.getElementById('conversionState').classList.remove('hidden');
+                }
+            }, 1200);
+        });
+    </script>
+</body>
+</html>
